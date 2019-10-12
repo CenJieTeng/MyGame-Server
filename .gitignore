@@ -1,6 +1,11 @@
 lua53.exe
 
-*.lib
+./lualib/*.so
+/test/lualib
 *.dll
+*.so
+*.lib
+*.a
+
 *.exp
 *.lnk

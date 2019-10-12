@@ -1,6 +1,9 @@
+package.path = "lualib/?.lua"
+package.cpath = "lualib/?.so"
 local db = require "db"
 
-db.connect("localhost", "root", "5656", "my_test", 3306)
+db.connect("localhost", "lbt", "5656", "my_test", 3306)
+db.query("set names utf8")
 
 local function fun(v)
     if (v) then
@@ -26,7 +29,7 @@ end
 
 showTable()
 
-db.insert("students",{"id","name","gender","age","score","email"}, {1005, "cjt", "男", 21, 100, "22@qq.com"})
+db.insert("students",{"id","name","gender","age","score","email"}, {1006, "cjt", "男", 21, 100, "22@qq.com"})
 print("插入数据后---------------")
 showTable()
 
@@ -37,6 +40,3 @@ showTable()
 db.erase("students", "id = 1006")
 print("删除数据后---------------")
 showTable()
-
-while true do
-end
