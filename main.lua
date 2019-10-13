@@ -1,3 +1,5 @@
+package.path = "./lualib/?.lua;" .. package.path
+package.cpath = "./lualib/?.so;" .. package.cpath
 local socket = require "socket"
 local timer = require "timer"
 local db = require "db"
@@ -18,7 +20,7 @@ local accountOnlinePlayer = {} --账户->客户端表 保存使用该账户登�
 local playerKeyAccount = {} --客户端key->账户表
 
 --连接到数据库
-db.connect("localhost", "root", "5656", "gameserver", 3306)
+db.connect("localhost", "lbt", "5656", "gameserver", 3306)
 --从数据库account表加载账户信息
 while true do
     local row = db.fetch_row("SELECT * FROM account")
@@ -217,9 +219,11 @@ socket.setCallBack("read", function(who)
             --通知客户端login结果
             socket.doWrite(who, pb.encode("SessionMsg", msg), message.mt.proto, message.pmt.SessionMsg)
             --更新客户端roomlist
-            timer.create(100, function()
-                updateRoomList(who)
-            end, false)
+            if msg["result"] == true then
+                timer.create(100, function()
+                    updateRoomList(who)
+                end, false)
+            end
         end
     elseif (socket.getProtoMessageType(who) == message.pmt.GameMsg) then --GameMsg
         if (msg["MsgType"] == message.GameMsgType.create
@@ -257,8 +261,9 @@ socket.setCallBack("read", function(who)
             updateRoomList();
         elseif (msg["MsgType"] == message.RoomMsgType.start) then
             room.start(roomId)
-            hall[key] = nil --客户端从大厅表中去除
         elseif (msg["MsgType"] == message.RoomMsgType.ready) then
+            hall[key] = nil --客户端从大厅表中去除
+
             local ret = room.ready(roomId, who)
             if (ret) then
                 --开启定时器，间隔1s统计伤害发送给客户端
@@ -284,6 +289,6 @@ socket.setCallBack("read", function(who)
     end
 end)
 
-socket.listen("127.0.0.1", 9999)
+socket.listen("192.168.11.128", 9999)
 socket.accept()
 socket.run()

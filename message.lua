@@ -1,3 +1,4 @@
+package.path = "./lualib/?.lua;" .. package.path
 local message = {}
 local protoc = require "protoc"
 
