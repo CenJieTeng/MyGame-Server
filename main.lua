@@ -228,10 +228,12 @@ socket.setCallBack("read", function(who)
     elseif (socket.getProtoMessageType(who) == message.pmt.GameMsg) then --GameMsg
         if (msg["MsgType"] == message.GameMsgType.create
             or msg["MsgType"] == message.GameMsgType.position
-            or msg["MsgType"] == message.GameMsgType.attack
-            or msg["MsgType"] == message.GameMsgType.chat) then
+            or msg["MsgType"] == message.GameMsgType.attack) then
                 msg["key"] = key
                 room.broadcast(roomId, msg, message.pmt.GameMsg)
+        elseif(msg["MsgType"] == message.GameMsgType.chat) then
+            msg["chatMsg"] = tostring(playerKeyAccount[key]) .. ': ' .. msg["chatMsg"]
+            room.broadcast(roomId, msg, message.pmt.GameMsg)
         elseif(msg["MsgType"] == message.GameMsgType.enemyHurt) then
             if (playerDamage[key] == nil) then
                 playerDamage[key] = 0
