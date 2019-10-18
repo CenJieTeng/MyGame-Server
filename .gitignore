@@ -1,4 +1,5 @@
 lua53.exe
+makefile_test
 
 ./lualib/*.so
 /test/lualib
