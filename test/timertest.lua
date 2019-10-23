@@ -1,3 +1,5 @@
+package.path = "./lualib/?.lua;" .. package.path
+package.cpath = "./lualib/?.so;" .. package.cpath
 local socket = require "socket"
 
 local count = 0
@@ -18,6 +20,3 @@ end, true)
 socket.run()
 
 print("done")
-
-while (true) do
-end

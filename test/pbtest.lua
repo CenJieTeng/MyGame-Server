@@ -1,3 +1,5 @@
+package.path = "./lualib/?.lua;" .. package.path
+package.cpath = "./lualib/?.so;" .. package.cpath
 local pb = require "pb"
 local protoc = require "protoc"
 

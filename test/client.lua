@@ -1,5 +1,7 @@
-local socket = require("socket")
-local message = require("message")
+package.path = "./lualib/?.lua;" .. package.path
+package.cpath = "./lualib/?.so;" .. package.cpath
+local socket = require "socket"
+local message = require "message"
 
 local HOST = "127.0.0.1"
 local PORT = 9999
