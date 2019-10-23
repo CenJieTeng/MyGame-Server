@@ -1,4 +1,3 @@
-package.path = "../?.lua;" .. package.path
 local core = require "socketcore"
 local message = require "message"
 --local cjson = require "cjson"

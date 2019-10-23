@@ -1,5 +1,3 @@
-package.path = "./lualib/?.lua;" .. package.path
-package.cpath = "./lualib/?.so;" .. package.cpath
 local socket = require "socket"
 local timer = require "timer"
 local db = require "db"
@@ -116,6 +114,7 @@ socket.setCallBack("accept", function(who)
 
     socket.setKey(who, key) --设置客户端在players表的key
     players[key] = who --添加到表
+    hall[key] = who
     playerDamage[key] = 0 --初始化伤害值
 
     --告诉客户端自己的key

@@ -9,7 +9,9 @@
             "request": "launch",
             "name": "Launch",
             "cwd": "${workspaceFolder}",
-            "luaexe": "${workspaceFolder}/lualib/lua53.exe",
+            "path": "${workspaceFolder}/?.lua;${workspaceFolder}/lualib/?.lua",
+            "cpath": "${workspaceFolder}/?.so;${workspaceFolder}/lualib/?.so",
+            "luaexe": "/bin/lua",
             "program": "${file}",
         }
     ]
