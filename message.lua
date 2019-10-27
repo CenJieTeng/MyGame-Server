@@ -50,6 +50,7 @@ message.GameMsgType = {
     enemyHurt = 4;
     chat = 5;
     getDamage = 6;
+    getDelay = 7;
 }
 
 --游戏消息

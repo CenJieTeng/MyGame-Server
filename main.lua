@@ -1,3 +1,5 @@
+package.path = "./lualib/?.lua;" .. package.path
+package.cpath = "./lualib/?.so;" .. package.cpath
 local socket = require "socket"
 local timer = require "timer"
 local db = require "db"
@@ -241,6 +243,8 @@ socket.setCallBack("read", function(who)
 
             msg["key"] = key
             room.broadcast(roomId, msg, message.pmt.GameMsg)
+	elseif(msg["MsgType"] == message.GameMsgType.getDelay) then
+	   socket.doWrite(who, pb.encode("GameMsg",msg), message.mt.proto, message.pmt.GameMsg)
         end
     elseif (socket.getProtoMessageType(who) == message.pmt.RoomMsg) then --RoomMsg
         if (msg["MsgType"] == message.RoomMsgType.create) then
@@ -290,6 +294,6 @@ socket.setCallBack("read", function(who)
     end
 end)
 
-socket.listen("192.168.11.128", 9999)
+socket.listen("172.24.35.8", 9999)
 socket.accept()
 socket.run()
